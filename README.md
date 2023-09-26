@@ -49,5 +49,5 @@ Contribuições para este projeto são bem-vindas! Sinta-se à vontade para abri
 
 ## Licença
 
-Este projeto é distribuído sob a licença MIT License. Consulte o arquivo [LICENSE](link-para-o-arquivo-de-licenca.md) para obter mais informações.
+Este projeto é distribuído sob a licença MIT License. Consulte o arquivo [LICENSE](LICENSE.md) para obter mais informações.
 
