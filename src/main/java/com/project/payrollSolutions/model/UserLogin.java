@@ -24,5 +24,6 @@ public class UserLogin {
 
     private String role;
 
-    private Boolean active;
+    @Column(name = "employee_id")
+    private Long employeeId;
 }

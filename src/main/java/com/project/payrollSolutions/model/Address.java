@@ -27,4 +27,12 @@ public class Address {
     private String neighborhood;
 
     private String houseNumber;
+
+    public Address(String streetAddress, String city, String postalCode, String neighborhood, String houseNumber) {
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.neighborhood = neighborhood;
+        this.houseNumber = houseNumber;
+    }
 }
