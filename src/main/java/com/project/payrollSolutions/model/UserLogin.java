@@ -26,4 +26,10 @@ public class UserLogin {
 
     @Column(name = "employee_id")
     private Long employeeId;
+
+    public UserLogin(String document, String role, Long employeeId) {
+        this.document = document;
+        this.role = role;
+        this.employeeId = employeeId;
+    }
 }

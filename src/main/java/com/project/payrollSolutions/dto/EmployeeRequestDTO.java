@@ -1,13 +1,14 @@
 package com.project.payrollSolutions.dto;
 
-import com.project.payrollSolutions.model.Address;
 import com.project.payrollSolutions.model.Employee;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
+@Setter
 public class EmployeeRequestDTO {
     private Long id;
     private String name;

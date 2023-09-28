@@ -3,8 +3,10 @@ package com.project.payrollSolutions.dto;
 
 import com.project.payrollSolutions.model.Address;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class AddressRequestDTO {
     private Long id;
     private String streetAddress;

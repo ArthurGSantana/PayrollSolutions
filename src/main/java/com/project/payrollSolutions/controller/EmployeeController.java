@@ -1,11 +1,9 @@
 package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.EmployeeRequestDTO;
-import com.project.payrollSolutions.model.Address;
 import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
