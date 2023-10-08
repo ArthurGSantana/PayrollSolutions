@@ -1,14 +1,9 @@
 package com.project.payrollSolutions.utils;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.security.SecureRandom;
 
 @AllArgsConstructor
-@NoArgsConstructor
 public class TransformPassword {
     public String generateRandomPassword(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

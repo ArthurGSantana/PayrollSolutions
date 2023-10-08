@@ -1,6 +1,7 @@
 package com.project.payrollSolutions.dto;
 
 import com.project.payrollSolutions.model.UserLogin;
+import com.project.payrollSolutions.security.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class UserLoginRequestDTO {
 
     @NotNull
     @NotBlank
-    private String role;
+    private UserRole role;
 
     private Long employeeId;
 

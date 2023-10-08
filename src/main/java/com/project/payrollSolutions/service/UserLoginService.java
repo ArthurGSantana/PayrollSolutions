@@ -2,10 +2,10 @@ package com.project.payrollSolutions.service;
 
 import com.project.payrollSolutions.dto.UserLoginRequestDTO;
 import com.project.payrollSolutions.model.UserLogin;
-import com.project.payrollSolutions.repository.EmployeeRepository;
 import com.project.payrollSolutions.repository.UserLoginRepository;
 import com.project.payrollSolutions.utils.TransformPassword;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -14,22 +14,26 @@ import java.security.SecureRandom;
 public class UserLoginService {
 
     private final UserLoginRepository userLoginRepository;
-    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public UserLoginService(UserLoginRepository userLoginRepository, EmployeeRepository employeeRepository) {
+    public UserLoginService(UserLoginRepository userLoginRepository) {
         this.userLoginRepository = userLoginRepository;
-        this.employeeRepository = employeeRepository;
     }
 
     public void createUserLogin(UserLoginRequestDTO userLogin) {
         UserLogin newUserLogin = userLogin.transformToUserLogin();
-        TransformPassword transformPassword = new TransformPassword();
 
+        if(this.userLoginRepository.findByDocument(newUserLogin.getDocument()) != null) {
+            throw new RuntimeException("User has already been created!");
+        }
+
+        TransformPassword transformPassword = new TransformPassword();
         String password = transformPassword.generateRandomPassword(8);
-        newUserLogin.setPassword(password);
+        System.out.println(password);
+        String encryptedPassword = new BCryptPasswordEncoder().encode(password);
+
+        newUserLogin.setPassword(encryptedPassword);
 
         userLoginRepository.save(newUserLogin);
     }
-
 }
