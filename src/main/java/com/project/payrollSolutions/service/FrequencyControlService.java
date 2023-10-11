@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class FrequencyControlService {
-
     private final FrequencyControlRepository frequencyControlRepository;
 
     @Autowired

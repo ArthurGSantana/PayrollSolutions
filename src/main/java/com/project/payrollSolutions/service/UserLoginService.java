@@ -12,7 +12,6 @@ import java.security.SecureRandom;
 
 @Service
 public class UserLoginService {
-
     private final UserLoginRepository userLoginRepository;
 
     @Autowired
