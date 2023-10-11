@@ -17,15 +17,13 @@ public class FrequencyControlService {
         this.frequencyControlRepository = frequencyControlRepository;
     }
 
-    public FrequencyControl createFrequencyControl(FrequencyControlRequestDTO frequencyControlRequestDTO) {
-        FrequencyControl frequencyControl = frequencyControlRequestDTO.transformToFrequencyControl();
-
+    public FrequencyControl createFrequencyControl(FrequencyControl frequencyControl) {
         frequencyControl = frequencyControlRepository.save(frequencyControl);
 
         return frequencyControl;
     }
 
-    public FrequencyControl updateFrequencyControl(FrequencyControlRequestDTO frequencyControlRequestDTO) {
+    public void updateFrequencyControl(FrequencyControlRequestDTO frequencyControlRequestDTO) {
         Optional<FrequencyControl> frequencyControlOptional = frequencyControlRepository.findById(frequencyControlRequestDTO.getId());
 
         if (frequencyControlOptional.isPresent()) {
@@ -33,7 +31,6 @@ public class FrequencyControlService {
 
             frequencyControl = frequencyControlRepository.save(frequencyControl);
 
-            return frequencyControl;
         } else {
             throw new RuntimeException("FrequencyControl by id " + frequencyControlRequestDTO.getId() + " was not found");
         }

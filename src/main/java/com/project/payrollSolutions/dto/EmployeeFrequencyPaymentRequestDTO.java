@@ -6,7 +6,9 @@ import com.project.payrollSolutions.model.PaymentInformation;
 import com.project.payrollSolutions.model.id.EmployeeFrequencyPaymentId;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 
+@Getter
 public class EmployeeFrequencyPaymentRequestDTO {
 
     @NotNull

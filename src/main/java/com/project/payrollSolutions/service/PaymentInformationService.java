@@ -15,23 +15,19 @@ public class PaymentInformationService {
         this.paymentInformationRepository = paymentInformationRepository;
     }
 
-    public PaymentInformation createPaymentInformation(PaymentInformationRequestDTO paymentInformationRequestDTO) {
-        PaymentInformation paymentInformation = paymentInformationRequestDTO.transformToPaymentInformation();
-
+    public PaymentInformation createPaymentInformation(PaymentInformation paymentInformation) {
         paymentInformation = paymentInformationRepository.save(paymentInformation);
 
         return paymentInformation;
     }
 
-    public PaymentInformation updatePaymentInformation(PaymentInformationRequestDTO paymentInformationRequestDTO) {
+    public void updatePaymentInformation(PaymentInformationRequestDTO paymentInformationRequestDTO) {
         Optional<PaymentInformation> paymentInformationOptional = paymentInformationRepository.findById(paymentInformationRequestDTO.getId());
 
         if (paymentInformationOptional.isPresent()) {
             PaymentInformation paymentInformation = paymentInformationRequestDTO.transformToPaymentInformation();
 
             paymentInformation = paymentInformationRepository.save(paymentInformation);
-
-            return paymentInformation;
         } else {
             throw new RuntimeException("PaymentInformation by id " + paymentInformationRequestDTO.getId() + " was not found");
         }
