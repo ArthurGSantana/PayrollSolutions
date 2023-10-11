@@ -17,23 +17,26 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     public String secret;
 
+    @Value("${api.security.token.expiration}")
+    private long tokenExpiration;
+
     public String generateToken(UserLogin user) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(this.secret);
+            Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(this.generateExpirationDate()).sign(algorithm);
+            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(generateExpirationDate()).sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);
         }
     }
 
     private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusHours(tokenExpiration).toInstant(ZoneOffset.of("-03:00"));
     }
 
     public String validateToken(String token) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(this.secret);
+            Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.require(algorithm).withIssuer("payroll").build().verify(token).getSubject();
         } catch (JWTVerificationException exception) {

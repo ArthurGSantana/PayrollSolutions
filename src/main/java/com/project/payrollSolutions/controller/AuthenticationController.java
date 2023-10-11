@@ -5,9 +5,11 @@ import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +32,14 @@ public class AuthenticationController {
     public ResponseEntity login(@RequestBody @Valid AuthenticationRequestDTO data) {
         var userDocumentPassword = new UsernamePasswordAuthenticationToken(data.getDocument(), data.getPassword());
 
-        var auth = this.authenticationManager.authenticate(userDocumentPassword);
+        try {
+            var auth = this.authenticationManager.authenticate(userDocumentPassword);
+            var token = this.tokenService.generateToken((UserLogin) auth.getPrincipal());
 
-        var token = this.tokenService.generateToken((UserLogin) auth.getPrincipal());
+            return ResponseEntity.ok(token);
 
-        return ResponseEntity.ok(token);
+        } catch (AuthenticationException exception) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }
