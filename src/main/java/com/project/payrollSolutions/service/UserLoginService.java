@@ -23,14 +23,17 @@ public class UserLoginService {
     public void createUserLogin(UserLoginRequestDTO userLogin) {
         UserLogin newUserLogin = userLogin.transformToUserLogin();
 
-        if(this.userLoginRepository.findByDocument(newUserLogin.getDocument()) != null) {
+        if (this.userLoginRepository.findByDocument(newUserLogin.getDocument()) != null) {
             throw new RuntimeException("User has already been created!");
         }
 
-        TransformPassword transformPassword = new TransformPassword();
-        String password = transformPassword.generateRandomPassword(8);
-        System.out.println(password);
-        String encryptedPassword = new BCryptPasswordEncoder().encode(password);
+        if (userLogin.getPassword() == null) {
+            TransformPassword transformPassword = new TransformPassword();
+            String password = transformPassword.generateRandomPassword(8);
+            userLogin.setPassword(password);
+        }
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(userLogin.getPassword());
 
         newUserLogin.setPassword(encryptedPassword);
 

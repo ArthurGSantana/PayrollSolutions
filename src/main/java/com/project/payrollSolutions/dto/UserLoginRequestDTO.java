@@ -4,6 +4,7 @@ import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.security.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,10 @@ public class UserLoginRequestDTO {
     @NotBlank
     private UserRole role;
 
+    @Null
+    private String password;
+
+    @Null
     private Long employeeId;
 
     public UserLogin transformToUserLogin() {

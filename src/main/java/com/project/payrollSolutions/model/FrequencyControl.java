@@ -23,4 +23,10 @@ public class FrequencyControl {
     private Integer absences;
 
     private Integer justifiedAbsences;
+
+    public FrequencyControl(Double workedHours, Integer absences, Integer justifiedAbsences) {
+        this.workedHours = workedHours;
+        this.absences = absences;
+        this.justifiedAbsences = justifiedAbsences;
+    }
 }

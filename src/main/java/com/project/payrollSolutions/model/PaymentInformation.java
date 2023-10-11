@@ -33,4 +33,14 @@ public class PaymentInformation {
     private Double netSalary;
 
     private LocalDate paymentDate;
+
+    public PaymentInformation(Double grossSalary, Double additional, Double discounts, Double inssSalary, Double irrfSalary, Double netSalary, LocalDate paymentDate) {
+        this.grossSalary = grossSalary;
+        this.additional = additional;
+        this.discounts = discounts;
+        this.inssSalary = inssSalary;
+        this.irrfSalary = irrfSalary;
+        this.netSalary = netSalary;
+        this.paymentDate = paymentDate;
+    }
 }
