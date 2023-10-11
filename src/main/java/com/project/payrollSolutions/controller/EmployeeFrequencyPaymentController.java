@@ -6,7 +6,8 @@ import com.project.payrollSolutions.model.id.EmployeeFrequencyPaymentId;
 import com.project.payrollSolutions.service.EmployeeFrequencyPaymentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,24 +21,29 @@ public class EmployeeFrequencyPaymentController {
     }
 
     @GetMapping
-    public EmployeeFrequencyPayment findEmployeeFrequencyPaymentById(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
+    public ResponseEntity<EmployeeFrequencyPayment> findEmployeeFrequencyPaymentById(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
         EmployeeFrequencyPaymentId employeeFrequencyPaymentId = new EmployeeFrequencyPaymentId(employeeId, monthYear);
-        return employeeFrequencyPaymentService.findEmployeeFrequencyPaymentById(employeeFrequencyPaymentId);
+        var employeeFrequencyPayment = employeeFrequencyPaymentService.findEmployeeFrequencyPaymentById(employeeFrequencyPaymentId);
+        return ResponseEntity.ok(employeeFrequencyPayment);
     }
 
     @PostMapping
-    public EmployeeFrequencyPayment createEmployeeFrequencyPayment(@RequestBody @Valid EmployeeFrequencyPaymentRequestDTO employeeFrequencyPaymentRequestDTO) {
-        return employeeFrequencyPaymentService.createEmployeeFrequencyPayment(employeeFrequencyPaymentRequestDTO);
+    public ResponseEntity<EmployeeFrequencyPayment> createEmployeeFrequencyPayment(@RequestBody @Valid EmployeeFrequencyPaymentRequestDTO employeeFrequencyPaymentRequestDTO) {
+        var employeeFrequencyPayment = employeeFrequencyPaymentService.createEmployeeFrequencyPayment(employeeFrequencyPaymentRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeFrequencyPayment);
     }
 
+
     @PutMapping
-    public void updateEmployeeFrequencyPayment(@RequestBody @Valid EmployeeFrequencyPaymentRequestDTO employeeFrequencyPaymentRequestDTO) {
+    public ResponseEntity<Void> updateEmployeeFrequencyPayment(@RequestBody @Valid EmployeeFrequencyPaymentRequestDTO employeeFrequencyPaymentRequestDTO) {
         employeeFrequencyPaymentService.updateEmployeeFrequencyPayment(employeeFrequencyPaymentRequestDTO);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
-    public void deleteEmployeeFrequencyPayment(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
+    public ResponseEntity<Void> deleteEmployeeFrequencyPayment(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
         EmployeeFrequencyPaymentId employeeFrequencyPaymentId = new EmployeeFrequencyPaymentId(employeeId, monthYear);
         employeeFrequencyPaymentService.deleteEmployeeFrequencyPayment(employeeFrequencyPaymentId);
+        return ResponseEntity.noContent().build();
     }
 }

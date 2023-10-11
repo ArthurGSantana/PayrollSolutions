@@ -4,9 +4,11 @@ import com.project.payrollSolutions.dto.PaymentInformationRequestDTO;
 import com.project.payrollSolutions.model.PaymentInformation;
 import com.project.payrollSolutions.repository.PaymentInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class PaymentInformationService {
     private final PaymentInformationRepository paymentInformationRepository;
 
