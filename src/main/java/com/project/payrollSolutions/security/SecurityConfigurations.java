@@ -33,10 +33,15 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
+
                         .requestMatchers(HttpMethod.POST, "/employee").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/employee").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/employee").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/employee").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/employeeFrequencyPayment").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/employeeFrequencyPayment").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/employeeFrequencyPayment").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
