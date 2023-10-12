@@ -1,24 +1,32 @@
 package com.project.payrollSolutions.service;
 
 import com.project.payrollSolutions.dto.UserLoginRequestDTO;
+import com.project.payrollSolutions.email.SendEmailMessage;
+import com.project.payrollSolutions.email.SendEmailService;
 import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.repository.UserLoginRepository;
 import com.project.payrollSolutions.utils.TransformPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 
 @Service
 public class UserLoginService {
     private final UserLoginRepository userLoginRepository;
+    private final EmployeeService employeeService;
+    private final SendEmailService sendEmailService;
 
     @Autowired
-    public UserLoginService(UserLoginRepository userLoginRepository) {
+    public UserLoginService(UserLoginRepository userLoginRepository, EmployeeService employeeService, SendEmailService sendEmailService) {
         this.userLoginRepository = userLoginRepository;
+        this.employeeService = employeeService;
+        this.sendEmailService = sendEmailService;
     }
 
+    @Transactional
     public void createUserLogin(UserLoginRequestDTO userLogin) {
         UserLogin newUserLogin = userLogin.transformToUserLogin();
 
@@ -37,5 +45,18 @@ public class UserLoginService {
         newUserLogin.setPassword(encryptedPassword);
 
         userLoginRepository.save(newUserLogin);
+
+        if (userLogin.getEmployeeId() != null) {
+            this.sendEmailForEmployee(userLogin);
+        }
+    }
+
+    private void sendEmailForEmployee(UserLoginRequestDTO userLogin) {
+        var employee = employeeService.findEmployeeById(userLogin.getEmployeeId());
+        var subject = SendEmailMessage.createSubject(employee.getName());
+        var text = SendEmailMessage.createText(employee.getName(), employee.getDocument(), userLogin.getPassword());
+
+        sendEmailService.sendEmail(employee.getEmail(), subject, text);
+
     }
 }
