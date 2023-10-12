@@ -14,27 +14,21 @@ public class PaymentInformationRequestDTO {
     private Long id;
 
     @NotNull
-    @NotBlank
     private Double grossSalary;
 
     @NotNull
-    @NotBlank
     private Double additional;
 
     @NotNull
-    @NotBlank
     private Double discounts;
 
     @NotNull
-    @NotBlank
     private Double inssSalary;
 
     @NotNull
-    @NotBlank
     private Double irrfSalary;
 
     @NotNull
-    @NotBlank
     private Double netSalary;
 
     @NotNull
@@ -42,6 +36,6 @@ public class PaymentInformationRequestDTO {
     private LocalDate paymentDate;
 
     public PaymentInformation transformToPaymentInformation() {
-        return new PaymentInformation(this.grossSalary, this.additional, this.discounts, this.inssSalary, this.irrfSalary, this.netSalary, this.paymentDate);
+        return new PaymentInformation(this.id, this.grossSalary, this.additional, this.discounts, this.inssSalary, this.irrfSalary, this.netSalary, this.paymentDate);
     }
 }

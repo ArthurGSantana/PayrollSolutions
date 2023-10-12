@@ -29,7 +29,7 @@ public class FrequencyControlService {
         if (frequencyControlOptional.isPresent()) {
             FrequencyControl frequencyControl = frequencyControlRequestDTO.transformToFrequencyControl();
 
-            frequencyControl = frequencyControlRepository.save(frequencyControl);
+            frequencyControlRepository.save(frequencyControl);
 
         } else {
             throw new RuntimeException("FrequencyControl by id " + frequencyControlRequestDTO.getId() + " was not found");

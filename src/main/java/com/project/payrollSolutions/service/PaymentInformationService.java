@@ -29,7 +29,7 @@ public class PaymentInformationService {
         if (paymentInformationOptional.isPresent()) {
             PaymentInformation paymentInformation = paymentInformationRequestDTO.transformToPaymentInformation();
 
-            paymentInformation = paymentInformationRepository.save(paymentInformation);
+            paymentInformationRepository.save(paymentInformation);
         } else {
             throw new RuntimeException("PaymentInformation by id " + paymentInformationRequestDTO.getId() + " was not found");
         }

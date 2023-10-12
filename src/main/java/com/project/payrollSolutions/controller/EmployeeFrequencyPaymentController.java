@@ -1,6 +1,7 @@
 package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.EmployeeFrequencyPaymentRequestDTO;
+import com.project.payrollSolutions.dto.EmployeeFrequencyPaymentResponseDTO;
 import com.project.payrollSolutions.model.EmployeeFrequencyPayment;
 import com.project.payrollSolutions.model.id.EmployeeFrequencyPaymentId;
 import com.project.payrollSolutions.service.EmployeeFrequencyPaymentService;
@@ -21,7 +22,7 @@ public class EmployeeFrequencyPaymentController {
     }
 
     @GetMapping
-    public ResponseEntity<EmployeeFrequencyPayment> findEmployeeFrequencyPaymentById(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
+    public ResponseEntity<EmployeeFrequencyPaymentResponseDTO> findEmployeeFrequencyPaymentById(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
         EmployeeFrequencyPaymentId employeeFrequencyPaymentId = new EmployeeFrequencyPaymentId(employeeId, monthYear);
         var employeeFrequencyPayment = employeeFrequencyPaymentService.findEmployeeFrequencyPaymentById(employeeFrequencyPaymentId);
         return ResponseEntity.ok(employeeFrequencyPayment);

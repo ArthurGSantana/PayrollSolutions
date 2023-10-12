@@ -14,18 +14,15 @@ public class FrequencyControlRequestDTO {
     private Long id;
 
     @NotNull
-    @NotBlank
     private Double workedHours;
 
     @NotNull
-    @NotBlank
     private Integer absences;
 
     @NotNull
-    @NotBlank
     private Integer justifiedAbsences;
 
     public FrequencyControl transformToFrequencyControl() {
-        return new FrequencyControl(this.workedHours, this.absences, this.justifiedAbsences);
+        return new FrequencyControl(this.id, this.workedHours, this.absences, this.justifiedAbsences);
     }
 }

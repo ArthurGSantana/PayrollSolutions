@@ -12,7 +12,6 @@ import lombok.Getter;
 public class EmployeeFrequencyPaymentRequestDTO {
 
     @NotNull
-    @NotBlank
     private Long employeeId;
 
     @NotNull
@@ -20,11 +19,9 @@ public class EmployeeFrequencyPaymentRequestDTO {
     private String monthYear;
 
     @NotNull
-    @NotBlank
     private FrequencyControlRequestDTO frequencyControl;
 
     @NotNull
-    @NotBlank
     private PaymentInformationRequestDTO paymentInformation;
 
     public EmployeeFrequencyPayment transformToEmployeeFrequencyPayment() {

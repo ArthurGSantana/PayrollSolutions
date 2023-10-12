@@ -1,6 +1,7 @@
 package com.project.payrollSolutions.service;
 
 import com.project.payrollSolutions.dto.EmployeeFrequencyPaymentRequestDTO;
+import com.project.payrollSolutions.dto.EmployeeFrequencyPaymentResponseDTO;
 import com.project.payrollSolutions.model.EmployeeFrequencyPayment;
 import com.project.payrollSolutions.model.FrequencyControl;
 import com.project.payrollSolutions.model.PaymentInformation;
@@ -26,8 +27,9 @@ public class EmployeeFrequencyPaymentService {
         this.paymentInformationService = paymentInformationService;
     }
 
-    public EmployeeFrequencyPayment findEmployeeFrequencyPaymentById(EmployeeFrequencyPaymentId employeeFrequencyPaymentId) {
-        return employeeFrequencyPaymentRepository.findById(employeeFrequencyPaymentId).orElseThrow(() -> new RuntimeException("EmployeeFrequencyPayment by employee id " + employeeFrequencyPaymentId.getEmployeeId() + "and monthYear" + employeeFrequencyPaymentId.getMonthYear() + " was not found"));
+    public EmployeeFrequencyPaymentResponseDTO findEmployeeFrequencyPaymentById(EmployeeFrequencyPaymentId employeeFrequencyPaymentId) {
+        var employeeFrequencyPayment = employeeFrequencyPaymentRepository.findById(employeeFrequencyPaymentId).orElseThrow(() -> new RuntimeException("EmployeeFrequencyPayment by employee id " + employeeFrequencyPaymentId.getEmployeeId() + "and monthYear" + employeeFrequencyPaymentId.getMonthYear() + " was not found"));
+        return new EmployeeFrequencyPaymentResponseDTO(employeeFrequencyPayment.getId().getEmployeeId(), employeeFrequencyPayment.getId().getMonthYear(), employeeFrequencyPayment.getFrequencyControl(), employeeFrequencyPayment.getPaymentInformation());
     }
 
     @Transactional
