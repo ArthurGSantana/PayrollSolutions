@@ -38,13 +38,5 @@ public class Employee {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public Employee(String name, String email, String document, String jobTitle, Double baseSalary, String phone, LocalDate birthDate) {
-        this.name = name;
-        this.email = email;
-        this.document = document;
-        this.jobTitle = jobTitle;
-        this.baseSalary = baseSalary;
-        this.phone = phone;
-        this.birthDate = birthDate;
-    }
+
 }

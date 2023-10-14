@@ -34,13 +34,13 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeRequestDTO employee) {
-        var newEmployee = employeeService.createEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
+        var employee = employeeService.createEmployee(employeeRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(employee);
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Void> updateEmployee(@RequestBody EmployeeRequestDTO employee) {
         employeeService.updateEmployee(employee);
         return ResponseEntity.noContent().build();
     }
