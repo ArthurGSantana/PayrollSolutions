@@ -10,7 +10,6 @@ import lombok.Getter;
 
 @Getter
 public class EmployeeFrequencyPaymentRequestDTO {
-
     @NotNull
     private Long employeeId;
 

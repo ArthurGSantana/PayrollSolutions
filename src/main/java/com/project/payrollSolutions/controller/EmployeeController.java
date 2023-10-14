@@ -3,6 +3,7 @@ package com.project.payrollSolutions.controller;
 import com.project.payrollSolutions.dto.EmployeeRequestDTO;
 import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,13 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<Employee> createEmployee(@RequestBody @Valid EmployeeRequestDTO employeeRequestDTO) {
         var employee = employeeService.createEmployee(employeeRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(employee);
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateEmployee(@RequestBody EmployeeRequestDTO employee) {
+    public ResponseEntity<Void> updateEmployee(@RequestBody @Valid EmployeeRequestDTO employee) {
         employeeService.updateEmployee(employee);
         return ResponseEntity.noContent().build();
     }

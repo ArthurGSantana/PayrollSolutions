@@ -9,6 +9,7 @@ public class AuthenticationRequestDTO {
     @NotNull
     @NotBlank
     private String document;
+
     @NotNull
     @NotBlank
     private String password;

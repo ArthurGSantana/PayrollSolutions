@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class EmployeeRequestDTO {
-    @Null
     private Long id;
 
     @NotNull
@@ -40,7 +39,6 @@ public class EmployeeRequestDTO {
     private String phone;
 
     @NotNull
-    @NotBlank
     private LocalDate birthDate;
 
     @NotNull
