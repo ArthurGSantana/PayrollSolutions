@@ -5,6 +5,7 @@ import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.service.EmployeeService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
+@Tag(name = "Employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
 

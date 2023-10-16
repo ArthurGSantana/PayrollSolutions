@@ -6,6 +6,7 @@ import com.project.payrollSolutions.model.EmployeeFrequencyPayment;
 import com.project.payrollSolutions.model.id.EmployeeFrequencyPaymentId;
 import com.project.payrollSolutions.service.EmployeeFrequencyPaymentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employeeFrequencyPayment")
+@Tag(name = "EmployeeFrequencyPayment")
 public class EmployeeFrequencyPaymentController {
     private final EmployeeFrequencyPaymentService employeeFrequencyPaymentService;
 
