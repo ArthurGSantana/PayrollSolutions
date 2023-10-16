@@ -42,7 +42,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/employeeFrequencyPayment").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/employeeFrequencyPayment").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/employeeFrequencyPayment").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

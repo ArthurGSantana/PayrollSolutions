@@ -26,7 +26,7 @@ public class TokenService {
 
             return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(generateExpirationDate()).sign(algorithm);
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while generating token", exception);
+            throw new JWTCreationException("Error while generating token", exception);
         }
     }
 
@@ -40,7 +40,7 @@ public class TokenService {
 
             return JWT.require(algorithm).withIssuer("payroll").build().verify(token).getSubject();
         } catch (JWTVerificationException exception) {
-            return "";
+            throw new JWTVerificationException("Error while validating token", exception);
         }
     }
 }
