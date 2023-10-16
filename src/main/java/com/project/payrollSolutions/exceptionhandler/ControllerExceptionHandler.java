@@ -149,4 +149,17 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
     }
+
+    @ResponseBody
+    @ExceptionHandler(SendEmailException.class)
+    public ResponseEntity<ExceptionHandlerMessage> authenticationException(SendEmailException e, HttpServletRequest request) {
+        ExceptionHandlerMessage err = new ExceptionHandlerMessage();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        err.setError("An error occurred while sending the email to the user");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
+    }
 }

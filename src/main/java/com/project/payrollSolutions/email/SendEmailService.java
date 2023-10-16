@@ -1,5 +1,6 @@
 package com.project.payrollSolutions.email;
 
+import com.project.payrollSolutions.exceptionhandler.SendEmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,8 +24,8 @@ public class SendEmailService {
             message.setText(text);
             javaMailSender.send(message);
 
-        } catch (Exception exception) {
-            throw new RuntimeException("Send email for user was canceled!");
+        } catch (SendEmailException exception) {
+            throw new SendEmailException(exception.getMessage());
         }
     }
 }
