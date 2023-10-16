@@ -2,6 +2,7 @@ package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.UserLoginRequestDTO;
 import com.project.payrollSolutions.service.UserLoginService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ public class UserLoginController {
     }
 
     @PostMapping
+    @Operation(summary = "Cria um novo usuário e faz o disparo de e-mail automático para ele")
     public ResponseEntity createUserLogin(@RequestBody UserLoginRequestDTO user) {
         this.userLoginService.createUserLogin(user);
 
@@ -27,6 +29,7 @@ public class UserLoginController {
     }
 
     @PostMapping("/sendEmail")
+    @Operation(summary = "Faz o disparo de e-mail para o funcionário pelo Id")
     public ResponseEntity<Void> sendEmailToEmployee(Long employeeId) {
         userLoginService.sendEmailToEmployee(employeeId);
 

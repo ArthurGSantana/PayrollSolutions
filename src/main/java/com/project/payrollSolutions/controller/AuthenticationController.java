@@ -2,6 +2,7 @@ package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.AuthenticationRequestDTO;
 import com.project.payrollSolutions.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Faz o login na aplicação")
     public ResponseEntity<String> login(@RequestBody @Valid AuthenticationRequestDTO data) {
         String token = authenticationService.login(data);
 

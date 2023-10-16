@@ -5,6 +5,7 @@ import com.project.payrollSolutions.dto.EmployeeFrequencyPaymentResponseDTO;
 import com.project.payrollSolutions.model.EmployeeFrequencyPayment;
 import com.project.payrollSolutions.model.id.EmployeeFrequencyPaymentId;
 import com.project.payrollSolutions.service.EmployeeFrequencyPaymentService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class EmployeeFrequencyPaymentController {
     }
 
     @GetMapping
+    @Operation(summary = "Retorna a folha de pagamento e a frequencia mensal de um funcionário de acordo com o Id e o mês desejado")
     public ResponseEntity<EmployeeFrequencyPaymentResponseDTO> findEmployeeFrequencyPaymentById(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
         EmployeeFrequencyPaymentId employeeFrequencyPaymentId = new EmployeeFrequencyPaymentId(employeeId, monthYear);
         var employeeFrequencyPayment = employeeFrequencyPaymentService.findEmployeeFrequencyPaymentById(employeeFrequencyPaymentId);
@@ -29,6 +31,7 @@ public class EmployeeFrequencyPaymentController {
     }
 
     @PostMapping
+    @Operation(summary = "Cria uma nova folha de pagamento e uma nova frequencia mensal para o funcionário")
     public ResponseEntity<EmployeeFrequencyPayment> createEmployeeFrequencyPayment(@RequestBody @Valid EmployeeFrequencyPaymentRequestDTO employeeFrequencyPaymentRequestDTO) {
         var employeeFrequencyPayment = employeeFrequencyPaymentService.createEmployeeFrequencyPayment(employeeFrequencyPaymentRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeFrequencyPayment);
@@ -36,12 +39,14 @@ public class EmployeeFrequencyPaymentController {
 
 
     @PutMapping
+    @Operation(summary = "Edita a folha de pagamento e a frequencia mensal do funcionário existente")
     public ResponseEntity<Void> updateEmployeeFrequencyPayment(@RequestBody @Valid EmployeeFrequencyPaymentRequestDTO employeeFrequencyPaymentRequestDTO) {
         employeeFrequencyPaymentService.updateEmployeeFrequencyPayment(employeeFrequencyPaymentRequestDTO);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
+    @Operation(summary = "Exclui a folha de pagamento e a frequencia mensal de um funcionário de acordo com o Id e o mês desejado")
     public ResponseEntity<Void> deleteEmployeeFrequencyPayment(@RequestParam @Valid Long employeeId, @RequestParam @Valid String monthYear) {
         EmployeeFrequencyPaymentId employeeFrequencyPaymentId = new EmployeeFrequencyPaymentId(employeeId, monthYear);
         employeeFrequencyPaymentService.deleteEmployeeFrequencyPayment(employeeFrequencyPaymentId);
