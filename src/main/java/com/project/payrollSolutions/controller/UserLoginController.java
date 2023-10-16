@@ -26,4 +26,11 @@ public class UserLoginController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/sendEmail")
+    public ResponseEntity<Void> sendEmailToEmployee(Long employeeId) {
+        userLoginService.sendEmailToEmployee(employeeId);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

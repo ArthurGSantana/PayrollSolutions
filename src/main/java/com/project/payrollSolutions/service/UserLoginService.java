@@ -11,8 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.SecureRandom;
-
 @Service
 public class UserLoginService {
     private final UserLoginRepository userLoginRepository;
@@ -47,16 +45,25 @@ public class UserLoginService {
         userLoginRepository.save(newUserLogin);
 
         if (userLogin.getEmployeeId() != null) {
-            this.sendEmailForEmployee(userLogin);
+            this.sendEmailToEmployee(userLogin);
         }
     }
 
-    private void sendEmailForEmployee(UserLoginRequestDTO userLogin) {
+    private void sendEmailToEmployee(UserLoginRequestDTO userLogin) {
         var employee = employeeService.findEmployeeById(userLogin.getEmployeeId());
         var subject = SendEmailMessage.createSubject(employee.getName());
         var text = SendEmailMessage.createText(employee.getName(), employee.getDocument(), userLogin.getPassword());
 
         sendEmailService.sendEmail(employee.getEmail(), subject, text);
+    }
 
+    public void sendEmailToEmployee(Long employeeId) {
+        var employee = employeeService.findEmployeeById(employeeId);
+        var userLogin = userLoginRepository.findByDocument(employee.getDocument());
+
+        var subject = SendEmailMessage.createSubject(employee.getName());
+        var text = SendEmailMessage.createText(employee.getName(), employee.getDocument(), userLogin.getPassword());
+
+        sendEmailService.sendEmail(employee.getEmail(), subject, text);
     }
 }
