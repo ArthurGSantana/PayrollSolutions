@@ -136,4 +136,17 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
     }
+
+    @ResponseBody
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ExceptionHandlerMessage> authenticationException(AuthenticationException e, HttpServletRequest request) {
+        ExceptionHandlerMessage err = new ExceptionHandlerMessage();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.UNAUTHORIZED.value());
+        err.setError(e.getMessage());
+        err.setMessage("Document or password are incorrect");
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
+    }
 }
