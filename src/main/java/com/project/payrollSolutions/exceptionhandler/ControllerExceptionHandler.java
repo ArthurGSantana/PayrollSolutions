@@ -162,4 +162,17 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
     }
+
+    @ResponseBody
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ExceptionHandlerMessage> nullPointerException(NullPointerException e, HttpServletRequest request) {
+        ExceptionHandlerMessage err = new ExceptionHandlerMessage();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        err.setError("An error occurred ");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
+    }
 }

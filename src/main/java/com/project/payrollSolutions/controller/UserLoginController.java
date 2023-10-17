@@ -1,15 +1,16 @@
 package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.UserLoginRequestDTO;
+import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.service.UserLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("user")
@@ -20,6 +21,13 @@ public class UserLoginController {
     @Autowired
     public UserLoginController(UserLoginService userLoginService) {
         this.userLoginService = userLoginService;
+    }
+
+    @GetMapping
+    @Operation(summary = "Retorna lista de usuários cadastrados")
+    public ResponseEntity<List<UserLogin>> findAllUsers() {
+        var users = userLoginService.findAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping

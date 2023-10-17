@@ -3,6 +3,7 @@ package com.project.payrollSolutions.service;
 import com.project.payrollSolutions.dto.UserLoginRequestDTO;
 import com.project.payrollSolutions.email.SendEmailMessage;
 import com.project.payrollSolutions.email.SendEmailService;
+import com.project.payrollSolutions.exceptionhandler.NotFoundException;
 import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.repository.UserLoginRepository;
 import com.project.payrollSolutions.utils.TransformPassword;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserLoginService {
@@ -22,6 +25,10 @@ public class UserLoginService {
         this.userLoginRepository = userLoginRepository;
         this.employeeService = employeeService;
         this.sendEmailService = sendEmailService;
+    }
+
+    public List<UserLogin> findAllUsers() {
+        return userLoginRepository.findAll();
     }
 
     @Transactional
@@ -51,8 +58,8 @@ public class UserLoginService {
 
     private void sendEmailToEmployee(UserLoginRequestDTO userLogin) {
         var employee = employeeService.findEmployeeById(userLogin.getEmployeeId());
-        var subject = SendEmailMessage.createSubject(employee.getName());
-        var text = SendEmailMessage.createText(employee.getName(), employee.getDocument(), userLogin.getPassword());
+        var subject = SendEmailMessage.loginSubject(employee.getName());
+        var text = SendEmailMessage.loginText(employee.getName(), employee.getDocument(), userLogin.getPassword());
 
         sendEmailService.sendEmail(employee.getEmail(), subject, text);
     }
@@ -61,9 +68,14 @@ public class UserLoginService {
         var employee = employeeService.findEmployeeById(employeeId);
         var userLogin = userLoginRepository.findByDocument(employee.getDocument());
 
-        var subject = SendEmailMessage.createSubject(employee.getName());
-        var text = SendEmailMessage.createText(employee.getName(), employee.getDocument(), userLogin.getPassword());
+        if (userLogin != null) {
+            var subject = SendEmailMessage.feedbackSubject(employee.getName());
+            var text = SendEmailMessage.feedbackText(employee.getName(), employee.getDocument());
 
-        sendEmailService.sendEmail(employee.getEmail(), subject, text);
+            sendEmailService.sendEmail(employee.getEmail(), subject, text);
+        } else {
+            throw new NotFoundException("User with document " + employee.getDocument() + " was not found");
+        }
+
     }
 }

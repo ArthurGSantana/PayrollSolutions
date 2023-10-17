@@ -32,7 +32,9 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/user/sendEmail").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.POST, "/employee").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/employee").hasRole("ADMIN")
