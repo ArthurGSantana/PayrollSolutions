@@ -4,9 +4,11 @@ import com.project.payrollSolutions.dto.EmployeeRequestDTO;
 import com.project.payrollSolutions.exceptionhandler.NotFoundException;
 import com.project.payrollSolutions.model.Address;
 import com.project.payrollSolutions.model.Employee;
-import com.project.payrollSolutions.repository.AddressRepository;
 import com.project.payrollSolutions.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,13 @@ public class EmployeeService {
     }
 
     public Employee findEmployeeById(Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("EmployeeId " + id + " was not found"));
+        return employeeRepository.findById(id).orElseThrow(() -> new NotFoundException("EmployeeId " + id + " was not found"));
+    }
+
+    public Page<Employee> search(String search, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "name");
+
+        return employeeRepository.search(search.toLowerCase(), pageRequest);
     }
 
     public List<Employee> findAllEmployees() {

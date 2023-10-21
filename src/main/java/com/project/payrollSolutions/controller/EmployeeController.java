@@ -1,5 +1,6 @@
 package com.project.payrollSolutions.controller;
 
+import com.project.payrollSolutions.dto.EmployeeFilterDTO;
 import com.project.payrollSolutions.dto.EmployeeRequestDTO;
 import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.service.EmployeeService;
@@ -31,6 +32,14 @@ public class EmployeeController {
     public ResponseEntity<Employee> findEmployeeById(@PathVariable Long id) {
         var employee = employeeService.findEmployeeById(id);
         return ResponseEntity.ok(employee);
+    }
+
+    @PostMapping
+    @Operation(summary = "Retorna lista de funcionários filtrados")
+    public ResponseEntity<List<Employee>> findEmployeeByFilter(@RequestBody @Valid EmployeeFilterDTO employeeFilterDTO) {
+        var employees = employeeService.search(employeeFilterDTO.getSearch(), employeeFilterDTO.getPage(), employeeFilterDTO.getPerPage());
+        employees.getTotalElements();
+        return ResponseEntity.ok(employees.getContent());
     }
 
     @GetMapping
