@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
@@ -24,14 +22,14 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(generateExpirationDate()).sign(algorithm);
+            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(Instant.ofEpochMilli(generateExpirationDate())).sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new JWTCreationException("Error while generating token", exception);
         }
     }
 
-    private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(tokenExpiration).toInstant(ZoneOffset.of("-03:00"));
+    private Long generateExpirationDate() {
+        return System.currentTimeMillis() + tokenExpiration;
     }
 
     public String validateToken(String token) {
