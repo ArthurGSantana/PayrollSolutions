@@ -2,12 +2,11 @@ package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.EmployeeFilterDTO;
 import com.project.payrollSolutions.dto.EmployeeRequestDTO;
+import com.project.payrollSolutions.dto.SearchFilterDTO;
 import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.service.EmployeeService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,18 +33,16 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @PostMapping
+    @PostMapping("/filter")
     @Operation(summary = "Retorna lista de funcionários filtrados")
-    public ResponseEntity<List<Employee>> findEmployeeByFilter(@RequestBody @Valid EmployeeFilterDTO employeeFilterDTO) {
-        var employees = employeeService.search(employeeFilterDTO.getSearch(), employeeFilterDTO.getPage(), employeeFilterDTO.getPerPage());
-        employees.getTotalElements();
-        return ResponseEntity.ok(employees.getContent());
+    public ResponseEntity<SearchFilterDTO<Employee>> findEmployeeByFilter(@RequestBody @Valid EmployeeFilterDTO employeeFilterDTO) {
+        var data = employeeService.search(employeeFilterDTO.getSearch(), employeeFilterDTO.getPage(), employeeFilterDTO.getPerPage());
+        return ResponseEntity.ok(data);
     }
 
     @GetMapping
     @Operation(summary = "Retorna lista de todos os funcionários")
     public ResponseEntity<List<Employee>> findAllEmployee() {
-        System.out.println("findAll: " + employeeService.findAllEmployees());
         var employees = employeeService.findAllEmployees();
         return ResponseEntity.ok(employees);
     }

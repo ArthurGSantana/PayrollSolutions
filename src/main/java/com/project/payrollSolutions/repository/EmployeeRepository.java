@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    @Query("FROM Employee e WHERE LOWER(e.name) like %:search% OR e.document like %:search%")
+    @Query("SELECT e FROM employee e WHERE LOWER(e.name) LIKE %:search% OR e.document LIKE %:search%")
     public Page<Employee> search(@Param("search") String search, Pageable pageable);
 }
