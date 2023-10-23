@@ -1,6 +1,7 @@
 package com.project.payrollSolutions.controller;
 
 import com.project.payrollSolutions.dto.AuthenticationRequestDTO;
+import com.project.payrollSolutions.dto.TokenDTO;
 import com.project.payrollSolutions.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,9 +26,17 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @Operation(summary = "Faz o login na aplicação")
-    public ResponseEntity<String> login(@RequestBody @Valid AuthenticationRequestDTO data) {
-        String token = authenticationService.login(data);
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid AuthenticationRequestDTO data) {
+        TokenDTO credentials = authenticationService.generateCredentials(data);
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(credentials);
+    }
+
+    @PostMapping("/refresh")
+    @Operation(summary = "Faz a renovaçao do token expirado")
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid TokenDTO data) {
+        TokenDTO credentials = authenticationService.verifyAndGenerateCredentials(data);
+
+        return ResponseEntity.ok(credentials);
     }
 }

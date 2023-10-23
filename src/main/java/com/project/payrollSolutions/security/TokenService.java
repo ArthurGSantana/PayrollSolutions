@@ -18,21 +18,44 @@ public class TokenService {
     @Value("${api.security.token.expiration}")
     private long tokenExpiration;
 
+    @Value("${api.security.refreshToken.expiration}")
+    private long refreshTokenExpiration;
+
     public String generateToken(UserLogin user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(Instant.ofEpochMilli(generateExpirationDate())).sign(algorithm);
+            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(Instant.ofEpochMilli(generateExpirationDate(tokenExpiration))).sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new JWTCreationException("Error while generating token", exception);
         }
     }
 
-    private Long generateExpirationDate() {
-        return System.currentTimeMillis() + tokenExpiration;
+    public String generateRefreshToken(UserLogin user) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+
+            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(Instant.ofEpochMilli(generateExpirationDate(refreshTokenExpiration))).sign(algorithm);
+        } catch (JWTCreationException exception) {
+            throw new JWTCreationException("Error while generating refresh token", exception);
+        }
+    }
+
+    private Long generateExpirationDate(Long expiration) {
+        return System.currentTimeMillis() + expiration;
     }
 
     public String validateToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+
+            return JWT.require(algorithm).withIssuer("payroll").build().verify(token).getSubject();
+        } catch (JWTVerificationException exception) {
+            throw new JWTVerificationException("Error while validating token", exception);
+        }
+    }
+
+    public String validateRefreshToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 

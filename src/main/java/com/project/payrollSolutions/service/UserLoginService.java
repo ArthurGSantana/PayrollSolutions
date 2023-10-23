@@ -8,6 +8,7 @@ import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.repository.UserLoginRepository;
 import com.project.payrollSolutions.utils.TransformPassword;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,10 @@ public class UserLoginService {
         this.userLoginRepository = userLoginRepository;
         this.employeeService = employeeService;
         this.sendEmailService = sendEmailService;
+    }
+
+    public UserDetails findUserDetails(String document) {
+        return userLoginRepository.findByDocument(document);
     }
 
     public List<UserLogin> findAllUsers() {
