@@ -3,11 +3,13 @@ package com.project.payrollSolutions.dto;
 import com.project.payrollSolutions.model.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class AddressRequestDTO {
     private Long id;
 
