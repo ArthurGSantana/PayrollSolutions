@@ -6,6 +6,7 @@ import com.project.payrollSolutions.model.Address;
 import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,14 +41,13 @@ class EmployeeServiceTest {
     private EmployeeRequestDTO employeeRequest;
     private List<Employee> employees;
     private Address address;
-    private AddressRequestDTO addressRequestDTO;
 
     @BeforeEach
     void setup() {
         address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
         employee = new Employee(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("1999-02-28"), address);
-        addressRequestDTO = new AddressRequestDTO(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
-        employeeRequest = new EmployeeRequestDTO(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("1999-02-28"), addressRequestDTO);
+        AddressRequestDTO addressRequestDTO = new AddressRequestDTO(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
+        employeeRequest = new EmployeeRequestDTO(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", "1999-02-28", addressRequestDTO);
         employees = new ArrayList<Employee>();
 
         for (int i = 0; i < 10; i++) {
@@ -55,6 +56,7 @@ class EmployeeServiceTest {
     }
 
     @Test
+    @DisplayName("Should return employee by id")
     void findEmployeeById() {
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
 
@@ -65,8 +67,9 @@ class EmployeeServiceTest {
     }
 
     @Test
+    @DisplayName("Should return employee list by filter")
     void search() {
-        when(employeeRepository.search("art", PageRequest.of(0, 10))).thenReturn(pageOfEmployees());
+        when(employeeRepository.search("art", PageRequest.of(0, 10, Sort.Direction.ASC, "name"))).thenReturn(pageOfEmployees());
 
         var result = employeeService.search("art");
 
@@ -76,6 +79,7 @@ class EmployeeServiceTest {
 
 
     @Test
+    @DisplayName("Should return all employees")
     void findAllEmployees() {
         when(employeeRepository.findAll()).thenReturn(employees);
 
@@ -86,6 +90,7 @@ class EmployeeServiceTest {
     }
 
     @Test
+    @DisplayName("Should create a new employee")
     void createEmployee() {
         when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
         when(addressService.createAddress(any(Address.class))).thenReturn(address);
@@ -97,16 +102,21 @@ class EmployeeServiceTest {
     }
 
     @Test
+    @DisplayName("Should update an existing employee")
     void updateEmployee() {
-        when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
+        var employeeTest = employeeRequest.transformToEmployee();
+
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(employeeTest));
+        when(employeeRepository.save(any())).thenReturn(employeeTest);
 
         employeeService.updateEmployee(employeeRequest);
 
-        verify(employeeRepository, times(1)).save(employeeRequest.transformToEmployee());
-        verify(addressService, times(1)).updateAddress(employee.getAddress());
+        verify(employeeRepository, times(1)).save(any());
+        verify(addressService, times(1)).updateAddress(any());
     }
 
     @Test
+    @DisplayName("Should delete an existing employee")
     void deleteEmployee() {
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
 

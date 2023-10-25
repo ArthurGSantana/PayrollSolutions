@@ -42,7 +42,7 @@ public class EmployeeController {
 
     @GetMapping
     @Operation(summary = "Retorna lista de todos os funcionários")
-    public ResponseEntity<List<Employee>> findAllEmployee() {
+    public ResponseEntity<List<Employee>> findAllEmployees() {
         var employees = employeeService.findAllEmployees();
         return ResponseEntity.ok(employees);
     }

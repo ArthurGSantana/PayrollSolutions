@@ -1,12 +1,14 @@
 package com.project.payrollSolutions.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.payrollSolutions.model.Address;
 import com.project.payrollSolutions.model.Employee;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeRequestDTO {
     private Long id;
 
@@ -41,13 +44,15 @@ public class EmployeeRequestDTO {
     private String phone;
 
     @NotNull
-    private LocalDate birthDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonProperty("birthDate")
+    private String birthDate;
 
     @NotNull
     private AddressRequestDTO address;
 
     public Employee transformToEmployee() {
         Address address = this.address.transformToAddress();
-        return new Employee(this.id, this.name, this.email, this.document, this.jobTitle, this.baseSalary, this.phone, this.birthDate, address);
+        return new Employee(this.id, this.name, this.email, this.document, this.jobTitle, this.baseSalary, this.phone, LocalDate.parse(this.birthDate), address);
     }
 }
