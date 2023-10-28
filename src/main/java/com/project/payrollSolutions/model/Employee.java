@@ -33,6 +33,8 @@ public class Employee {
 
     private LocalDate birthDate;
 
+    private LocalDate admissionDate;
+
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;

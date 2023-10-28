@@ -35,7 +35,11 @@ public class AddressRequestDTO {
     @NotBlank
     private String houseNumber;
 
+    @NotNull
+    @NotBlank
+    private String state;
+
     public Address transformToAddress() {
-        return new Address(this.id, this.streetAddress, this.city, this.postalCode, this.neighborhood, this.houseNumber);
+        return new Address(this.id, this.streetAddress, this.city, this.postalCode, this.neighborhood, this.houseNumber, this.state);
     }
 }

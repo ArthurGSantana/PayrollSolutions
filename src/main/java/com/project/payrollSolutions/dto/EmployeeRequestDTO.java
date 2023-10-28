@@ -49,10 +49,15 @@ public class EmployeeRequestDTO {
     private String birthDate;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonProperty("admissionDate")
+    private String admissionDate;
+
+    @NotNull
     private AddressRequestDTO address;
 
     public Employee transformToEmployee() {
         Address address = this.address.transformToAddress();
-        return new Employee(this.id, this.name, this.email, this.document, this.jobTitle, this.baseSalary, this.phone, LocalDate.parse(this.birthDate), address);
+        return new Employee(this.id, this.name, this.email, this.document, this.jobTitle, this.baseSalary, this.phone, LocalDate.parse(this.birthDate), LocalDate.parse(this.admissionDate), address);
     }
 }

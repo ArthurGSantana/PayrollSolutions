@@ -44,14 +44,14 @@ class EmployeeServiceTest {
 
     @BeforeEach
     void setup() {
-        address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
-        employee = new Employee(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("1999-02-28"), address);
-        AddressRequestDTO addressRequestDTO = new AddressRequestDTO(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
-        employeeRequest = new EmployeeRequestDTO(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", "1999-02-28", addressRequestDTO);
+        address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138", "Sao Paulo");
+        employee = new Employee(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("1999-02-28"), LocalDate.parse("2023-02-28"), address);
+        AddressRequestDTO addressRequestDTO = new AddressRequestDTO(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138", "Sao Paulo");
+        employeeRequest = new EmployeeRequestDTO(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", "1999-02-28", "2023-02-28", addressRequestDTO);
         employees = new ArrayList<Employee>();
 
         for (int i = 0; i < 10; i++) {
-            employees.add(new Employee((long) i + 1, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("1999-02-28"), address));
+            employees.add(new Employee((long) i + 1, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("2023-02-28"), LocalDate.parse("1999-02-28"), address));
         }
     }
 

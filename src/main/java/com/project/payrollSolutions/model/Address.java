@@ -28,11 +28,14 @@ public class Address {
 
     private String houseNumber;
 
-    public Address(String streetAddress, String city, String postalCode, String neighborhood, String houseNumber) {
+    private String state;
+
+    public Address(String streetAddress, String city, String postalCode, String neighborhood, String houseNumber, String state) {
         this.streetAddress = streetAddress;
         this.city = city;
         this.postalCode = postalCode;
         this.neighborhood = neighborhood;
         this.houseNumber = houseNumber;
+        this.state = state;
     }
 }

@@ -30,7 +30,7 @@ class AddressServiceTest {
 
     @BeforeEach
     void setup() {
-        address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
+        address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138", "Sao Paulo");
     }
 
     @Test

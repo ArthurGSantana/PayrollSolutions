@@ -51,11 +51,11 @@ class EmployeeControllerTest {
                 .alwaysDo(print())
                 .build();
 
-        Address address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
-        employee = new Employee(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("1999-02-28"), address);
+        Address address = new Address(1L, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138", "Sao Paulo");
+        employee = new Employee(1L, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", LocalDate.parse("2023-02-28"), LocalDate.parse("1999-02-28"), address);
 
-        AddressRequestDTO addressRequestDTO = new AddressRequestDTO(null, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138");
-        employeeRequest = new EmployeeRequestDTO(null, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", "1999-02-28", addressRequestDTO);
+        AddressRequestDTO addressRequestDTO = new AddressRequestDTO(null, "Rua teste", "Sao Paulo", "13235678", "Zona Sul", "138", "Sao Paulo");
+        employeeRequest = new EmployeeRequestDTO(null, "Arthur", "teste@teste.com", "45464677798", "Developer", 2500D, "992785578", "1999-02-28", "2023-02-28", addressRequestDTO);
     }
 
     @Test
