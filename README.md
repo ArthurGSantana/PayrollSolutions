@@ -1,5 +1,6 @@
 # PayrollSolutions
-Sistema de folha de pagamento desenvolvido em Java, utilizando Spring Framework.
+
+Sistema de folha de pagamento desenvolvido em Java, utilizando o Spring Boot.
 
 ---
 
@@ -21,6 +22,8 @@ Bem-vindo ao projeto de Folha de Pagamento Empresarial! Este é um sistema abran
 
 - **Autenticação de Funcionários Segura**: Utilize o poderoso Spring Security para implementar um sistema de autenticação robusto e seguro, protegendo os dados sensíveis da folha de pagamento.
 
+- **Disparo de E-mails**: Implementamos uma funcionalidade para o disparo de e-mails, permitindo que você notifique funcionários sobre atualizações de pagamento, informações de benefícios, entre outros.
+
 ## Tecnologias e Ferramentas Utilizadas
 
 - **Java**: A linguagem de programação principal que impulsiona este projeto.
@@ -35,11 +38,13 @@ Bem-vindo ao projeto de Folha de Pagamento Empresarial! Este é um sistema abran
 
 - **Lombok**: Uma biblioteca que ajuda a reduzir a verbosidade do código Java, automatizando a criação de getters, setters, construtores, etc.
 
+- **Amazon Web Services (AWS)**: Este projeto utiliza os serviços da AWS, como **EC2 (Elastic Compute Cloud)** para hospedar a aplicação e **RDS (Relational Database Service)** para armazenar os dados da folha de pagamento com alta disponibilidade e segurança.
+
 ## Como Iniciar
 
 1. **Clonando o Repositório**: Clone este repositório para o seu ambiente de desenvolvimento local.
 
-2. **Configuração do Banco de Dados**: Configure um banco de dados PostgreSQL e atualize as configurações de conexão no arquivo de configuração do Spring.
+2. **Configuração do Banco de Dados**: Configure um banco de dados PostgreSQL ou utilize o RDS da AWS e atualize as configurações de conexão no arquivo de configuração do Spring.
 
 3. **Executando o Projeto**: Execute o projeto e acesse a aplicação por meio de um navegador da web.
 
@@ -50,4 +55,3 @@ Contribuições para este projeto são bem-vindas! Sinta-se à vontade para abri
 ## Licença
 
 Este projeto é distribuído sob a licença MIT License. Consulte o arquivo [LICENSE](LICENSE.md) para obter mais informações.
-
