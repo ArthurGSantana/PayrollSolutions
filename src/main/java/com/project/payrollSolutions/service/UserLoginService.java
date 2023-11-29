@@ -4,6 +4,8 @@ import com.project.payrollSolutions.dto.UserLoginRequestDTO;
 import com.project.payrollSolutions.email.SendEmailMessage;
 import com.project.payrollSolutions.email.SendEmailService;
 import com.project.payrollSolutions.exceptionhandler.NotFoundException;
+import com.project.payrollSolutions.model.Address;
+import com.project.payrollSolutions.model.Employee;
 import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.repository.UserLoginRepository;
 import com.project.payrollSolutions.utils.TransformPassword;
@@ -30,6 +32,10 @@ public class UserLoginService {
 
     public UserDetails findUserDetails(String document) {
         return userLoginRepository.findByDocument(document);
+    }
+
+    public UserLogin findUserByEmployeeId(Long id) {
+        return userLoginRepository.findUserByEmployeeId(id);
     }
 
     public List<UserLogin> findAllUsers() {

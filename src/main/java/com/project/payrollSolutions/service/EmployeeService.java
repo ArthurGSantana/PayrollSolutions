@@ -5,7 +5,9 @@ import com.project.payrollSolutions.dto.SearchFilterDTO;
 import com.project.payrollSolutions.exceptionhandler.NotFoundException;
 import com.project.payrollSolutions.model.Address;
 import com.project.payrollSolutions.model.Employee;
+import com.project.payrollSolutions.model.UserLogin;
 import com.project.payrollSolutions.repository.EmployeeRepository;
+import com.project.payrollSolutions.repository.UserLoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,11 +20,13 @@ import java.util.List;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final AddressService addressService;
+    private final UserLoginRepository userLoginRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, AddressService addressService) {
+    public EmployeeService(EmployeeRepository employeeRepository, AddressService addressService, UserLoginRepository userLoginService) {
         this.employeeRepository = employeeRepository;
         this.addressService = addressService;
+        this.userLoginRepository = userLoginService;
     }
 
     public Employee findEmployeeById(Long id) {
@@ -68,6 +72,11 @@ public class EmployeeService {
 
     @Transactional
     public void deleteEmployee(Long id) {
+        UserLogin userLogin = userLoginRepository.findUserByEmployeeId(id);
+        if (userLogin != null) {
+            userLoginRepository.delete(userLogin);
+        }
+
         Employee employee = findEmployeeById(id);
         employeeRepository.delete(employee);
 
