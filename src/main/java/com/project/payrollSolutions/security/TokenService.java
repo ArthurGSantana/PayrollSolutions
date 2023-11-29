@@ -24,8 +24,8 @@ public class TokenService {
     public String generateToken(UserLogin user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-
-            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withExpiresAt(Instant.ofEpochMilli(generateExpirationDate(tokenExpiration))).sign(algorithm);
+            var employeeId = user.getEmployeeId() != null ? user.getEmployeeId().toString() : "";
+            return JWT.create().withIssuer("payroll").withSubject(user.getDocument()).withClaim("role", user.getRole().toString()).withClaim("employeeId", employeeId).withExpiresAt(Instant.ofEpochMilli(generateExpirationDate(tokenExpiration))).sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new JWTCreationException("Error while generating token", exception);
         }
